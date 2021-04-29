@@ -1,4 +1,5 @@
 import { Action, action, Thunk, thunk } from 'easy-peasy';
+import emloyeeApi from '../services/employee.api';
 import axios from 'axios';
 import store from '../store';
 
@@ -23,16 +24,12 @@ const employee: EmployeeModel = {
   }),
 
   getEmployeeList: thunk(async (actions) => {
-    const result = await axios.get('https://60891307a6f4a30017427876.mockapi.io/employee');
-    actions.setEmployeeList(result.data);
+    const req = await emloyeeApi.getEmployeeList();
+    actions.setEmployeeList(req.data);
   }),
 
   addEmployee: thunk(async (actions, payload) => {
-    const result = await axios.post(
-      'https://60891307a6f4a30017427876.mockapi.io/employee',
-      payload,
-    );
-    console.log(result);
+    const result = await emloyeeApi.addEmployee(payload);
     if (result.status === 200 || result.status === 201) {
       actions.getEmployeeList();
       store.getActions().dialogEmployee.setOpen(false);
