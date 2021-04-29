@@ -40,8 +40,10 @@ export default function DialogEmployee() {
   const { setOpen } = useStoreActions((actions) => actions.dialogEmployee);
   const { addEmployee } = useStoreActions((actions) => actions.employee);
 
-  const onSubmit: SubmitHandler<FormValues> = (data) =>
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     addEmployee({ name: data.name, email: data.email, position: data.position });
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -83,7 +85,7 @@ export default function DialogEmployee() {
             Cancel
           </Button>
           <Button type="submit" color="primary">
-            Subscribe
+            Add
           </Button>
         </DialogActions>
       </form>
