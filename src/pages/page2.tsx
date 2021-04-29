@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import TableComponent from '../components/TableComponent';
 
 interface IPage {
@@ -7,8 +7,10 @@ interface IPage {
 }
 const Page2: React.FunctionComponent<IPage> = () => {
   return (
-    <Grid style={{ display: 'flex', justifyContent: 'spaceBetween', alignItems: 'center' }}>
-      <TableComponent />
+    <Grid style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Grid style={{ width: 800, paddingTop: 50 }}>
+        <TableComponent />
+      </Grid>
     </Grid>
   );
 };

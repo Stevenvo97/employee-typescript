@@ -11,11 +11,12 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Typography,
 } from '@material-ui/core';
 
 const useStyles = makeStyles({
   table: {
-    maxWidth: 700,
+    minWidth: 700,
   },
 });
 
@@ -45,8 +46,13 @@ export default function TableComponent() {
     getEmployeeList();
   }, []);
   return (
-    <TableContainer component={Paper} aria-label="caption table" className={classes.table}>
-      <Table className={classes.table}>
+    <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="caption table">
+        <caption onClick={handleOpenDailogEmployee}>
+          <Typography style={{ display: 'flex', cursor: 'pointer' }}>
+            <AddIcon /> Add Employee
+          </Typography>
+        </caption>
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
@@ -70,9 +76,6 @@ export default function TableComponent() {
           </TableBody>
         )}
       </Table>
-      <caption style={{ display: 'flex', cursor: 'pointer' }} onClick={handleOpenDailogEmployee}>
-        <AddIcon /> Add Employee
-      </caption>
       <TablePagination
         rowsPerPageOptions={[5]}
         component="div"

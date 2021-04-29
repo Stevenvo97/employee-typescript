@@ -61,9 +61,7 @@ export default function DialogEmployee() {
             {...register('name')}
             error={errors?.name ? true : false}
           />
-
           <TextField
-            autoFocus
             margin="dense"
             id="email"
             label="Email Address"
@@ -72,7 +70,6 @@ export default function DialogEmployee() {
             {...register('email')}
           />
           <TextField
-            autoFocus
             margin="dense"
             id="position"
             label="Position"
