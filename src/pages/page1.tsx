@@ -18,7 +18,9 @@ const Page1: FC<IPage & { initial?: number }> = ({ initial = 0 }) => {
   return (
     <Container maxWidth="sm" color="default">
       <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Typography>Count: {count}</Typography>
+        <Typography variant="h3" gutterBottom>
+          Count: {count}
+        </Typography>
         <Grid item xl={12} sm={6} container justify="space-between">
           <Button variant="contained" color="primary" onClick={handleRefresh}>
             Refresh
