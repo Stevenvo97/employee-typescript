@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useStoreState, useStoreActions } from '../config/hooks';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import {
@@ -13,6 +12,7 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core';
+import { useStoreState, useStoreActions } from '../config/hooks';
 
 const useStyles = makeStyles({
   table: {

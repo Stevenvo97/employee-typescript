@@ -2,7 +2,6 @@ import { Action, action } from 'easy-peasy';
 
 export interface DialogEmployeeModel {
   open: boolean;
-
   setOpen: Action<DialogEmployeeModel, boolean>;
 }
 

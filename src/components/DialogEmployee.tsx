@@ -7,8 +7,8 @@ import {
   DialogContent,
   DialogTitle,
 } from '@material-ui/core';
-import { useStoreState, useStoreActions } from '../config/hooks';
 import { useForm, Resolver, SubmitHandler } from 'react-hook-form';
+import { useStoreState, useStoreActions } from '../config/hooks';
 
 type FormValues = {
   name: string;
