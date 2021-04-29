@@ -20,7 +20,7 @@ export interface EmployeeModel {
 const employee: EmployeeModel = {
   emloyeeList: [],
   setEmployeeList: action((state, payload) => {
-    state.emloyeeList = payload;
+    state.emloyeeList = state.emloyeeList.concat(payload);
   }),
 
   getEmployeeList: thunk(async (actions) => {
@@ -31,7 +31,7 @@ const employee: EmployeeModel = {
   addEmployee: thunk(async (actions, payload) => {
     const result = await emloyeeApi.addEmployee(payload);
     if (result.status === 200 || result.status === 201) {
-      actions.getEmployeeList();
+      actions.setEmployeeList(result.data);
       store.getActions().dialogEmployee.setOpen(false);
       store
         .getActions()

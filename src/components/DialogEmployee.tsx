@@ -7,7 +7,7 @@ import {
   DialogContent,
   DialogTitle,
 } from '@material-ui/core';
-import { useForm, Resolver, SubmitHandler } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useStoreState, useStoreActions } from '../config/hooks';
 
 type FormValues = {
@@ -16,36 +16,32 @@ type FormValues = {
   position: string;
 };
 
-const resolver: Resolver<FormValues> = async (values) => {
-  return {
-    values: !values.name ? {} : values,
-    errors: !values.name
-      ? {
-          name: {
-            type: 'required',
-            message: 'This is required.',
-          },
-        }
-      : {},
-  };
+const initForm = {
+  name: '',
+  email: '',
+  position: '',
 };
+
 export default function DialogEmployee() {
   const {
     register,
-    handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({ resolver });
+    handleSubmit,
+    control,
+    reset,
+  } = useForm<FormValues>();
 
   const { open } = useStoreState((state) => state.dialogEmployee);
   const { setOpen } = useStoreActions((actions) => actions.dialogEmployee);
   const { addEmployee } = useStoreActions((actions) => actions.employee);
-
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+  const onSubmit = (data: FormValues) => {
+    console.log(data);
     addEmployee({ name: data.name, email: data.email, position: data.position });
+    reset(initForm);
   };
-
   const handleClose = () => {
     setOpen(false);
+    reset(initForm);
   };
 
   return (
@@ -53,31 +49,57 @@ export default function DialogEmployee() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogTitle id="form-dialog-title">Add Employee</DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Name"
-            type="text"
-            fullWidth
-            {...register('name')}
-            error={errors?.name ? true : false}
+          <Controller
+            name="name"
+            control={control}
+            rules={{ required: true }}
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                autoFocus
+                defaultValue=""
+                margin="dense"
+                id="name"
+                label="Name"
+                type="text"
+                fullWidth
+                error={Boolean(errors?.name)}
+                {...field}
+              />
+            )}
           />
-          <TextField
-            margin="dense"
-            id="email"
-            label="Email Address"
-            type="email"
-            fullWidth
-            {...register('email')}
+          <Controller
+            name="email"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                defaultValue=""
+                margin="dense"
+                id="email"
+                label="Email Address"
+                type="email"
+                fullWidth
+                {...field}
+              />
+            )}
           />
-          <TextField
-            margin="dense"
-            id="position"
-            label="Position"
-            type="text"
-            fullWidth
-            {...register('position')}
+
+          <Controller
+            name="position"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                defaultValue=""
+                margin="dense"
+                id="position"
+                label="Position"
+                type="text"
+                fullWidth
+                {...field}
+              />
+            )}
           />
         </DialogContent>
         <DialogActions>
