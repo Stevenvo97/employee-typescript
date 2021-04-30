@@ -70,6 +70,9 @@ export default function DialogEmployee() {
           />
           <Controller
             name="email"
+            rules={{
+              pattern: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+            }}
             control={control}
             defaultValue=""
             render={({ field }) => (
@@ -80,6 +83,7 @@ export default function DialogEmployee() {
                 label="Email Address"
                 type="email"
                 fullWidth
+                error={Boolean(errors?.email)}
                 {...field}
               />
             )}
