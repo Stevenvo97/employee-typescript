@@ -1,42 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
-import {
-  Table,
-  TablePagination,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Typography,
-} from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
+import { DataGrid, GridColDef } from '@material-ui/data-grid';
 import { useStoreState, useStoreActions } from '../config/hooks';
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 700,
-  },
-});
+const columns: GridColDef[] = [
+  { field: 'id', headerName: 'ID', width: 140, type: 'number' },
+  { field: 'name', headerName: 'Name', width: 200 },
+  { field: 'email', headerName: 'Email', width: 240, sortable: false },
+  { field: 'position', headerName: 'Position', width: 200, sortable: false },
+];
 
 export default function TableComponent() {
-  const classes = useStyles();
   const { emloyeeList } = useStoreState((state) => state.employee);
   const { getEmployeeList } = useStoreActions((actions) => actions.employee);
   const { setOpen } = useStoreActions((actions) => actions.dialogEmployee);
-
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const handleChangePage = (even: any, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: any) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
 
   const handleOpenDailogEmployee = () => {
     setOpen(true);
@@ -45,46 +23,15 @@ export default function TableComponent() {
   useEffect(() => {
     getEmployeeList();
   }, []);
+
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="caption table">
-        <caption onClick={handleOpenDailogEmployee}>
-          <Typography style={{ display: 'flex', cursor: 'pointer' }}>
-            <AddIcon /> Add Employee
-          </Typography>
-        </caption>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell align="right">Email</TableCell>
-            <TableCell align="right">Position</TableCell>
-          </TableRow>
-        </TableHead>
-        {emloyeeList.length !== 0 && (
-          <TableBody>
-            {emloyeeList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-              return (
-                <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="right">{row.email}</TableCell>
-                  <TableCell align="right">{row.position}</TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        )}
-      </Table>
-      <TablePagination
-        rowsPerPageOptions={[5]}
-        component="div"
-        count={emloyeeList.length}
-        rowsPerPage={5}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      ></TablePagination>
-    </TableContainer>
+    <Grid style={{ height: 400, width: '100%' }}>
+      <Grid onClick={handleOpenDailogEmployee}>
+        <Typography style={{ display: 'flex', justifyContent: 'flex-end', cursor: 'pointer' }}>
+          <AddIcon /> Add Employee
+        </Typography>
+      </Grid>
+      <DataGrid rows={emloyeeList} columns={columns} pageSize={5} disableColumnMenu />
+    </Grid>
   );
 }
