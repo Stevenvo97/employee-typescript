@@ -14,7 +14,7 @@ export interface EmployeeModel {
   emloyeeList: Datas[];
   setEmployeeList: Action<EmployeeModel, []>;
   getEmployeeList: Thunk<EmployeeModel>;
-  addEmployee: Thunk<EmployeeModel, object>;
+  addEmployee: Thunk<EmployeeModel, {}>;
 }
 
 const employee: EmployeeModel = {

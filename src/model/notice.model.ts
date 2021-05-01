@@ -7,7 +7,7 @@ interface Inotice {
 export interface NoticeModel {
   noticeDataInit: Inotice;
   noticeData: Inotice;
-  setSnackbarNotice: Action<NoticeModel, object>;
+  setSnackbarNotice: Action<NoticeModel, {}>;
 }
 
 const notice: NoticeModel = {
